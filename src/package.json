@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@alch/alchemy-web3": "^1.4.7",
+    "alchemy-sdk": "^2.9.0"
+  },
+  "browserslist": {
+    "production": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "last 1 edge version"
+    ]
+  }
+}

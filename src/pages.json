@@ -1,9 +1,25 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [ 
+		// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		// path poll
 		{
-			"path": "pages/index/index",
+			"path": "pages/poll/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "Poll"
+			}
+		},
+		// path poll List
+		{
+			"path": "pages/pollList/index",
+			"style": {
+				"navigationBarTitleText": "Polls"
+			}
+		},
+		// path poll form
+		{
+			"path": "pages/pollForm/index",
+			"style": {
+				"navigationBarTitleText": "Create a poll"
 			}
 		}
 	],
@@ -12,5 +28,6 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	}
+	},
+	"uniIdRouter": {}
 }
