@@ -11,6 +11,7 @@ const alchemyKey = "M2jcn1fE0ar94QApJ1fI5tDLYzTj4wZ5";
 console.log("alchemyKey: ", alchemyKey)
 
 import { Alchemy, Network, Contract, Wallet } from 'alchemy-sdk';
+import { tr } from '@dcloudio/vue-cli-plugin-uni/packages/postcss/tags';
 const settings = {
     apiKey: alchemyKey, // Replace with your Alchemy API key.
     network: Network.ETH_SEPOLIA // Replace with your network.
@@ -32,9 +33,35 @@ const store = new Vuex.Store({
         addPoll(state, poll) {
             state.polls.push(poll)
         },
-        vote(state, { pollId, optionId }) {
+        async vote(state, { pollId, optionId }) {
             const poll = state.polls[pollId]
             poll.options[optionId].count++
+
+            // catch error of await voteContract.voteVote(pollId, optionId)
+            try {
+                const result = await voteContract.voteVote(pollId, optionId)
+                console.log("The voteVote result is: " + JSON.stringify(result));
+            } catch (error) {
+                console.log("The voteVote error is: " + JSON.stringify(error));
+            }
+        },
+        async createPoll(state, { title, options }) {
+            const pollId = state.polls.length
+            state.polls.push({
+                title,
+                options: options.map(text => ({
+                    text,
+                    count: 0
+                }))
+            })
+
+
+            const currentTime = Date.now();
+            const tomorrowTime = currentTime + 864000000; // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+            const tomorrowTimestamp = BigInt(Math.floor(tomorrowTime / 1000));
+
+            const result = await voteContract.createVoteWithOption(title, tomorrowTimestamp.toString(), options);
+            console.log("The createVoteWithOption result is: " + JSON.stringify(result));
         }
     },
     actions: {
@@ -64,6 +91,11 @@ async function loadPolls() {
             options: options
         })                
     }
+}
+
+async function vote(pollId, optionId) {
+    await voteContract.vote(pollId, optionId)
+    store.commit('vote', { pollId, optionId })
 }
 
 loadPolls()

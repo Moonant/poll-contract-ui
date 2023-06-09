@@ -45,15 +45,8 @@
                 options = options.filter((option) => {
                     return option !== ''
                 })
-                 // add count to each option
-                 options = options.map((option) => {
-                    return {
-                        text: option,
-                        count: 0
-                    }
-                })
 
-                this.$store.commit('addPoll', {
+                this.$store.commit('createPoll', {
                     title: formValue.question,
                     options: options
                 })
